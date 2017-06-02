@@ -1,7 +1,8 @@
+#!/usr/bin/env python
 
 import xml.etree.ElementTree
 import sys
-
+import os.path
 
 def visit(node, depth):
 	for e in node.findall('node'):
@@ -30,9 +31,18 @@ def visit(node, depth):
 		visit(e, depth + 1)
 
 
+if len(sys.argv) < 2:
+	print("1 parameter required: filename")
+	sys.exit(1)
+
+filename = sys.argv[1]
+
+if(not os.path.isfile(filename)):
+	print("Non existent file")
+	sys.exit(2)
 
 
-e = xml.etree.ElementTree.parse('albero.xml').getroot()
+e = xml.etree.ElementTree.parse(filename).getroot()
 
 root = e.findall('node')[0]
 
